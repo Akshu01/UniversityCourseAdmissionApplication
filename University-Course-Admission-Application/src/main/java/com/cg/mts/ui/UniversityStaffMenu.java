@@ -1,0 +1,6 @@
+package com.cg.mts.ui;
+
+public enum UniversityStaffMenu {
+	ADD_STAFF, UPDATE_STAFF, VIEW_STAFF, REMOVE_STAFF,VIEW_ALL_STAFF,
+	ADD_COURSE,REMOVE_COURSE,UPDATE_COURSE, QUIT
+}

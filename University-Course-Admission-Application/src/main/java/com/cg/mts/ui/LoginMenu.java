@@ -1,0 +1,5 @@
+package com.cg.mts.ui;
+
+public enum LoginMenu {
+	LOGIN_AS_APPLICANT, LOGIN_AS_UNIVERSITYSTAFF, LOGIN_AS_ADMISSION_COMMITEE_MEMBER, QUIT
+}
