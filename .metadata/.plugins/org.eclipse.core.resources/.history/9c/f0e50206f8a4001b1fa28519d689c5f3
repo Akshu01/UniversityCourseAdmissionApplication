@@ -1,0 +1,78 @@
+set linesize 400
+
+CREATE TABLE courses
+( 
+courseId 		number(4) 		CONSTRAINT 	courses_courseId_pk 		PRIMARY KEY,
+courseName 		varchar2(30)  	CONSTRAINT 	courses_courseName_nn 		NOT NULL,
+courseDuration 	varchar2(20) 	CONSTRAINT 	courses_courseDuration_nn 	NOT NULL,
+startDate 		date  			CONSTRAINT 	courses_courseStartDate_nn 	NOT NULL,
+endDate  		date  			CONSTRAINT 	courses_courseEndDate_nn 	NOT NULL,
+courseFees 		varchar2(10)	CONSTRAINT 	courses_courseFees_nn 		NOT NULL,
+staffId 		number(4)		CONSTRAINT	courses_staffId_fk			REFERENCES ustaffmembers(staffId) 
+);
+
+INSERT INTO courses VALUES
+(1,'Java CORE','3 Months', '01-may-2021', '10-aug-2021', '3500',1);
+INSERT INTO courses VALUES
+(2,'Spring','2 Months', '05-may-2021', '12-aug-2021', '4000',1);
+INSERT INTO courses VALUES
+(3,'SQL','1 Month', '21-may-2021', '02-sep-2021', '2500',1);
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE ustaffmembers
+(
+staffId 	number(4)		CONSTRAINT	ustaffmembers_staffId_pk	PRIMARY KEY,
+password	varchar2(20)	CONSTRAINT	ustaffmembers_password_un	UNIQUE,
+role		varchar2(20)	CONSTRAINT	ustaffmembers_role_un		UNIQUE
+);
+
+INSERT INTO ustaffmembers VALUES
+(1,'dean@1234','Full Stack Trainer');
+INSERT INTO ustaffmembers VALUES
+(2,'Ak#@135','Professor');
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE login
+(
+name 			varchar2(20) CONSTRAINT login_name_nn NOT NULL,
+pass 			varchar2(20) CONSTRAINT login_pass_nn NOT NULL,
+ustaffvalidator number(4) 	 CONSTRAINT login_staffId_fk REFERENCES ustaffmembers(staffId)
+);
+
+INSERT INTO login VALUES
+('dean','#@dean123',1);
+
+INSERT INTO login VALUES
+('john','john*1234',2);
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE applicants(
+Applicant_Id number(19) CONSTRAINT applicants_Applicant_Id_pk PRIMARY KEY,
+Applicant_Name varchar2(30) CONSTRAINT applicants_Applicant_Name_nn NOT NULL,
+Mobile_Number varchar2(10) CONSTRAINT applicants_Mobile_Number_un UNIQUE,
+Applicant_Degree varchar2(15) CONSTRAINT applicants_Applicant_Degree_nn NOT NULL,
+ApplicantGradPercent number(4,2) NOT NULL
+);
+
+INSERT INTO applicants Values(4,'Rachana','9870065437','B.tech',80);
+INSERT INTO applicants Values(5,'Abhay','9878065437','B.tech',60);
+INSERT INTO applicants Values(6,'Tanu','9870069976','B.tech',68);
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE admissions(
+Admission_Id number(19) CONSTRAINT admissions_Admission_ID_pk PRIMARY KEY,
+admissionCourse number(4) CONSTRAINT admissions_admissionCourse_fk REFERENCES courses(courseId),
+Applicant_Id number(19) CONSTRAINT admissions_Applicant_Id_fk REFERENCES applicants(Applicant_Id),
+Status varchar2(15) CONSTRAINT admissions_status_nn NOT NULL,
+Admission_Date date CONSTRAINT admissions_Admission_Date_nn NOT NULL);
+
+INSERT INTO admissions VALUES(20,1,1,'01-may-2021',0);
+Insert into admissions values(22,3,4,'21-may-2021',2);
+Insert into admissions values(23,3,5,'21-may-2021',2);
+Insert into admissions values(24,2,6,'5-may-2021',2);
+
+COMMIT;

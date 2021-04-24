@@ -50,19 +50,30 @@ INSERT INTO login VALUES
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE applicants(
-Applicant_Id 		number(19) 	 CONSTRAINT applicants_Applicant_Id_pk PRIMARY KEY,
-Applicant_Name 		varchar2(30) CONSTRAINT applicants_Applicant_Name_nn NOT NULL,
-Mobile_Number 		varchar2(10) CONSTRAINT applicants_Mobile_Number_un UNIQUE,
-Applicant_Degree 	varchar2(15) CONSTRAINT applicants_Applicant_Degree_nn NOT NULL,
+Applicant_Id number(19) CONSTRAINT applicants_Applicant_Id_pk PRIMARY KEY,
+Applicant_Name varchar2(30) CONSTRAINT applicants_Applicant_Name_nn NOT NULL,
+Mobile_Number varchar2(10) CONSTRAINT applicants_Mobile_Number_un UNIQUE,
+Applicant_Degree varchar2(15) CONSTRAINT applicants_Applicant_Degree_nn NOT NULL,
 ApplicantGradPercent number(4,2) NOT NULL
 );
+
+INSERT INTO applicants Values(4,'Rachana','9870065437','B.tech',80);
+INSERT INTO applicants Values(5,'Abhay','9878065437','B.tech',60);
+INSERT INTO applicants Values(6,'Tanu','9870069976','B.tech',68);
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE admissions(
-Admission_Id 	number(19)	 	CONSTRAINT admissions_Admission_ID_pk 		PRIMARY KEY,
-admissionCourse number(4) 		CONSTRAINT admissions_admissionCourse_fk 	REFERENCES courses(courseId),
-Applicant_Id 	number(19) 		CONSTRAINT admissions_Applicant_Id_fk 		REFERENCES applicants(Applicant_Id),
-Admission_Date 	date 			CONSTRAINT admissions_Admission_Date_nn 	NOT NULL);
+Admission_Id number(19) CONSTRAINT admissions_Admission_ID_pk PRIMARY KEY,
+Course_Id number(19) CONSTRAINT admissions_Course_Id_nn NOT NULL,
+Applicant_Id number(19) CONSTRAINT admissions_Applicant_Id_fk REFERENCES applicants(Applicant_Id),
+Status varchar2(15) CONSTRAINT admissions_status_nn NOT NULL,
+Admission_Date date CONSTRAINT admissions_Admission_Date_nn NOT NULL);
+
+
+INSERT INTO admissions VALUES(20,1,1,'01-may-2021',0);
+Insert into admissions values(22,3,4,'21-may-2021',2);
+Insert into admissions values(23,3,5,'21-may-2021',2);
+Insert into admissions values(24,2,6,'5-may-2021',2);
 
 COMMIT;
